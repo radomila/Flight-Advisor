@@ -2,10 +2,10 @@ import React from "react";
 import Box from "@mui/material/Box";
 import ListItem from "@mui/material/ListItem";
 import Button from "@mui/material/Button";
-import EastIcon from "@mui/icons-material/East"; 
+import EastIcon from "@mui/icons-material/East";  
 import { useNavigate } from "react-router-dom";
 
-function FlightDetail({ flight, onSelectedFlight }) { 
+function FlightDetail({ flight }) { 
   let navigate = useNavigate();
   return (
     <Box
@@ -31,10 +31,13 @@ function FlightDetail({ flight, onSelectedFlight }) {
       <Button
         variant="text"
         sx={{ display: "inline-flex", py: 1, px: 5, fontWeight: "bold" }} 
-        onClick={() => navigate("/flight-reservation")}
+        onClick={() => navigate(`/flight-reservation/${flight.id}`)} 
       >
         Letenky
       </Button>  
+      {flight.seats.map((seat) => {
+        return <p>{seat.number}</p>
+      })}
     </Box>
   );
 }

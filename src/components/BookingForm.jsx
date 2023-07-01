@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import SeatBooking from "./SeatBooking";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
@@ -43,13 +42,9 @@ const FlightReservation = () => {
   };
 
   return (
-    <Box sx={{ ml: 10, mt: 5 }}>
-      <SeatBooking />
+    <Box>
       <Box>
         <Box sx={{ mb: 2 }}>
-          <Typography variant="h5" sx={{ fontWeight: 700 }}>
-            Flight Booking
-          </Typography>
           <Typography sx={{ color: "grey", fontWeight: 600, mt: 1 }}>
             Contact information
           </Typography> 

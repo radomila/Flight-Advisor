@@ -12,14 +12,14 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
 const DestinationPicker = () => {
-  const data = useContext(FlightsContext);
+  const data = useContext(FlightsContext); 
+  console.log(data);
 
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedDest, setSelectedDest] = useState(null);
   const [selectedFinalDest, setSelectedFinalDest] = useState(null);
   const [filteredDest, setFilteredDest] = useState([]);
   const [isClicked, setIsClicked] = useState(false);
-  const [selectedFlight, setSelectedFlight] = useState(null);
 
   const selectStartingDest = (event, date) => {
     setSelectedDest(date);
@@ -27,10 +27,6 @@ const DestinationPicker = () => {
 
   const selectFinalDest = (event, date) => {
     setSelectedFinalDest(date);
-  };
-
-  const handleSelectFlight = (flight) => {
-    setSelectedFlight(flight); 
   };
 
   const HandleSelectedDate = (value) => {
@@ -43,7 +39,6 @@ const DestinationPicker = () => {
 
   const handleFilteredFlights = () => {
     const filteredFlights = data.filter((flight) => {
-    
       const flightDeparture = flight.departure;
       const x = new Date(flightDeparture);
       const timeFlight = x.getTime();
@@ -108,7 +103,7 @@ const DestinationPicker = () => {
 
         {isClicked && filteredDest.length === 0 && (
           <Typography variant="h6" sx={{ mt: 2 }}>
-            Na základě zadaných paramterů nebyly nalezeny žádné dostupné lety.
+            Na základě zadaných parametrů nebyly nalezeny žádné dostupné lety.
           </Typography>
         )}
 
@@ -120,11 +115,7 @@ const DestinationPicker = () => {
                   {" "}
                   Všechny dostupné lety:
                 </Typography>
-                <FlightDetail
-                  key={flight.id}
-                  flight={flight}
-                  onSelectedFlight={handleSelectFlight}
-                />
+                <FlightDetail key={flight.id} flight={flight} />
               </div>
             );
           })}
