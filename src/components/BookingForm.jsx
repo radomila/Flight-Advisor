@@ -1,27 +1,31 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box"; 
-import Divider from '@mui/material/Divider';
- 
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import Confirmation from "./Confirmation";
+
 const FlightReservation = () => {
+  let navigate = useNavigate();
+
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState(null);
   const [arrival, setArrival] = useState("");
-  const [submittedForm, setSubmittedForm] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [FormSubmitted, setIsFormSubmitted] = useState(false);
   const [isFirstNameValid, setIsFirstNameValid] = useState(false);
   const [isLastNameValid, setIsLastNameValid] = useState(false);
   const [isDepartureValid, setIsDepartureValid] = useState(false);
   const [isArrivalValid, setIsArrivalValid] = useState(false);
-  const [isPhoneValid, setIsPhoneValid] = useState(false); 
+  const [isPhoneValid, setIsPhoneValid] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(false);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const isValid = (event) => {
     if (!/^[a-zA-Z]+$/.test(firstName, lastName, city)) {
       setIsFirstNameValid(true);
       setIsLastNameValid(true);
@@ -32,13 +36,22 @@ const FlightReservation = () => {
       !/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(phone)
     ) {
       setIsPhoneValid(true);
-    } 
-
-    if(!/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/.test(email)) {
-      setIsEmailValid(true);
     }
 
-    setSubmittedForm(true);
+    if (!/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/.test(email)) {
+      setIsEmailValid(true);
+    }
+    setIsFormValid(true);
+  };
+
+  const isFormSubmitted = (event) => {
+    isValid();
+    if (isFormValid) {
+      navigate(`/booking-confirmation`);
+      setIsFormSubmitted(true);
+    } else {
+      setIsFormSubmitted(false);
+    }
   };
 
   return (
@@ -47,8 +60,8 @@ const FlightReservation = () => {
         <Box sx={{ mb: 2 }}>
           <Typography sx={{ color: "grey", fontWeight: 600, mt: 1 }}>
             Contact information
-          </Typography> 
-          <Divider sx={{width: "55ch", mt: 1 }}/>
+          </Typography>
+          <Divider sx={{ width: "55ch", mt: 1 }} />
         </Box>
         <Box
           sx={{
@@ -59,6 +72,7 @@ const FlightReservation = () => {
         >
           <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
             <TextField
+              firstName={firstName} 
               required
               id="outlined-required"
               label="First Name"
@@ -66,16 +80,13 @@ const FlightReservation = () => {
               variant="standard"
               onChange={(e) => setFirstName(e.target.value)}
               helperText={
-                (submittedForm && !firstName
-                  ? "First Name is required"
-                  : null) ||
-                (submittedForm && isFirstNameValid
+                (isFormValid && !firstName ? "First Name is required" : null) ||
+                (isFormValid && isFirstNameValid
                   ? "First name is invalid"
                   : null)
               }
               error={
-                (submittedForm && !firstName) ||
-                (submittedForm && isFirstNameValid)
+                (isFormValid && !firstName) || (isFormValid && isFirstNameValid)
               }
             />
             <TextField
@@ -86,9 +97,10 @@ const FlightReservation = () => {
               variant="standard"
               onChange={(e) => setEmail(e.target.value)}
               helperText={
-                (submittedForm && !email ? "Email address is required" : null) || (submittedForm && isEmailValid ? "Email is invalid" : null)
+                (isFormValid && !email ? "Email address is required" : null) ||
+                (isFormValid && isEmailValid ? "Email is invalid" : null)
               }
-              error={(submittedForm && !email) || (submittedForm && isEmailValid)}
+              error={(isFormValid && !email) || (isFormValid && isEmailValid)}
             />
             <TextField
               required
@@ -98,15 +110,13 @@ const FlightReservation = () => {
               variant="standard"
               onChange={(e) => setCity(e.target.value)}
               helperText={
-                (submittedForm && !city
-                  ? "Departure city is required"
-                  : null) ||
-                (submittedForm && isDepartureValid
+                (isFormValid && !city ? "Departure city is required" : null) ||
+                (isFormValid && isDepartureValid
                   ? "Departure city is invalid"
                   : null)
               }
               error={
-                (submittedForm && !city) || (submittedForm && isDepartureValid)
+                (isFormValid && !city) || (isFormValid && isDepartureValid)
               }
             />
           </Box>
@@ -119,14 +129,13 @@ const FlightReservation = () => {
               variant="standard"
               onChange={(e) => setLastName(e.target.value)}
               helperText={
-                (submittedForm && !lastName ? "Last Name is required" : null) ||
-                (submittedForm && isFirstNameValid
+                (isFormValid && !lastName ? "Last Name is required" : null) ||
+                (isFormValid && isFirstNameValid
                   ? "Last name is invalid"
                   : null)
               }
               error={
-                (submittedForm && !lastName) ||
-                (submittedForm && isLastNameValid)
+                (isFormValid && !lastName) || (isFormValid && isLastNameValid)
               }
             />
             <TextField
@@ -137,9 +146,10 @@ const FlightReservation = () => {
               variant="standard"
               onChange={(e) => setPhone(e.target.value)}
               helperText={
-                (submittedForm && !phone ? "Phone number is required" : null) || (submittedForm && isPhoneValid ? "Phone number is invalid" : null)
+                (isFormValid && !phone ? "Phone number is required" : null) ||
+                (isFormValid && isPhoneValid ? "Phone number is invalid" : null)
               }
-              error={(submittedForm && !phone) || (submittedForm && isPhoneValid)}
+              error={(isFormValid && !phone) || (isFormValid && isPhoneValid)}
             />
             <TextField
               required
@@ -149,21 +159,19 @@ const FlightReservation = () => {
               variant="standard"
               onChange={(e) => setArrival(e.target.value)}
               helperText={
-                (submittedForm && !arrival
-                  ? "Arrival city is required"
-                  : null) ||
-                (submittedForm && isArrivalValid
+                (isFormValid && !arrival ? "Arrival city is required" : null) ||
+                (isFormValid && isArrivalValid
                   ? "Arrival city is invalid"
                   : null)
               }
               error={
-                (submittedForm && !arrival) || (submittedForm && isArrivalValid)
+                (isFormValid && !arrival) || (isFormValid && isArrivalValid)
               }
             />
           </Box>
         </Box>
         <Button
-          onClick={handleSubmit}
+          onClick={isFormSubmitted}
           variant="contained"
           sx={{
             display: "flex",
@@ -175,6 +183,7 @@ const FlightReservation = () => {
           Submit
         </Button>
       </Box>
+      {FormSubmitted && <Confirmation firstName={firstName} />}
     </Box>
   );
 };
