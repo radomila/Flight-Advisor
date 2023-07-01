@@ -19,6 +19,7 @@ const DestinationPicker = () => {
   const [selectedFinalDest, setSelectedFinalDest] = useState(null);
   const [filteredDest, setFilteredDest] = useState([]);
   const [isClicked, setIsClicked] = useState(false);
+  const [selectedFlight, setSelectedFlight] = useState(null);
 
   const selectStartingDest = (event, date) => {
     setSelectedDest(date);
@@ -26,6 +27,10 @@ const DestinationPicker = () => {
 
   const selectFinalDest = (event, date) => {
     setSelectedFinalDest(date);
+  };
+
+  const handleSelectFlight = (flight) => {
+    setSelectedFlight(flight); 
   };
 
   const HandleSelectedDate = (value) => {
@@ -38,6 +43,7 @@ const DestinationPicker = () => {
 
   const handleFilteredFlights = () => {
     const filteredFlights = data.filter((flight) => {
+    
       const flightDeparture = flight.departure;
       const x = new Date(flightDeparture);
       const timeFlight = x.getTime();
@@ -114,7 +120,11 @@ const DestinationPicker = () => {
                   {" "}
                   Všechny dostupné lety:
                 </Typography>
-                <FlightDetail key={flight.id} flight={flight} />
+                <FlightDetail
+                  key={flight.id}
+                  flight={flight}
+                  onSelectedFlight={handleSelectFlight}
+                />
               </div>
             );
           })}

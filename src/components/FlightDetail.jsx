@@ -1,13 +1,11 @@
 import React from "react"; 
-import FlightPicker from "../components/FlightPicker";
-import FlightReservation from "../components/FlightReservation";
 import Box from "@mui/material/Box";
 import ListItem from "@mui/material/ListItem";
 import Button from "@mui/material/Button";
 import EastIcon from "@mui/icons-material/East"; 
 import { useNavigate } from "react-router-dom";
 
-function FlightDetail({ flight }) { 
+function FlightDetail({ flight, onSelectedFlight }) { 
   let navigate = useNavigate();
   return (
     <Box
@@ -36,7 +34,7 @@ function FlightDetail({ flight }) {
         onClick={() => navigate("/flight-reservation")}
       >
         Letenky
-      </Button>
+      </Button>  
     </Box>
   );
 }

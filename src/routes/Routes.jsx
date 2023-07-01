@@ -1,5 +1,5 @@
 import FlightPicker from "../components/FlightPicker";
-import FlightReservation from "../components/FlightReservation";
+import BookingForm from "../components/BookingForm";
 import FlightsProvider from "../components/FlightsProvider";
 import { Route, Routes} from "react-router-dom";
 
@@ -8,7 +8,7 @@ const RoutesComponent = () => {
     <FlightsProvider> 
       <Routes>
         <Route exact path="/" element={<FlightPicker/>} />
-        <Route path="/flight-reservation" element={<FlightReservation/>} />
+        <Route path="/flight-reservation" element={<BookingForm/>} />
       </Routes>
     </FlightsProvider>
   );
