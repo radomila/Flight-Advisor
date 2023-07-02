@@ -13,7 +13,6 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
 const DestinationPicker = () => {
   const data = useContext(FlightsContext); 
-  console.log(data);
 
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedDest, setSelectedDest] = useState(null);
@@ -31,17 +30,16 @@ const DestinationPicker = () => {
 
   const HandleSelectedDate = (value) => {
     const date = value?.$d;
-    const z = new Date(date);
-    const time = z.getTime();
-    console.log(time);
+    const formattedDate = new Date(date);
+    const time = formattedDate.getTime();
     setSelectedDate(time);
   };
 
   const handleFilteredFlights = () => {
     const filteredFlights = data.filter((flight) => {
       const flightDeparture = flight.departure;
-      const x = new Date(flightDeparture);
-      const timeFlight = x.getTime();
+      const formattedflightDeparture = new Date(flightDeparture);
+      const timeFlight = formattedflightDeparture.getTime();
 
       const flightMatch =
         flight.from === selectedDest?.from &&
@@ -51,7 +49,6 @@ const DestinationPicker = () => {
     });
     setFilteredDest(filteredFlights);
     setIsClicked(true);
-    console.log(filteredFlights);
   };
 
   return (

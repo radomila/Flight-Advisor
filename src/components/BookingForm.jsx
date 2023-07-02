@@ -41,9 +41,6 @@ const BookingForm = () => {
     }
     setIsFormValid(true);
 
-    if (firstName) {
-      console.log(firstName);
-    }
   };
 
   const isFormSubmitted = (event) => {
