@@ -1,6 +1,5 @@
 import FlightPicker from "../components/FlightPicker";
 import FlightReservation from "../components/FlightReservation"; 
-import Confirmation from "../components/Confirmation";
 import { Route, Routes } from "react-router-dom";  
 
 const RoutesComponent = () => {   
@@ -12,10 +11,6 @@ const RoutesComponent = () => {
           path="/flight-reservation/:flightId"
           element={<FlightReservation/>}
         /> 
-        <Route
-          path="/booking-confirmation"
-          element={<Confirmation/>}
-        />
       </Routes>
     </>
   );

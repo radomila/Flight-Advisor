@@ -1,38 +1,78 @@
 import React from "react";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
-const Confirmation = ({firstName}) => { 
-  console.log(firstName);
+const Confirmation = (props) => {
+  let navigate = useNavigate();
+
+  const handleClose = () => {
+    props.setOpen(false);
+    navigate(`/`);
+  };
+
   return (
-    <Box
+    <Dialog
+      open={props.open}
+      onClose={() => props.setOpen(false)}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
       sx={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        justifyContent: "center",
         gap: 1,
       }}
     >
-      <Typography variant="h4" sx={{ fontWeight: "bold", mt: 4 }}>
-        Your booking has been completed! 
-      </Typography>
-        <p>This is information about Your flight.</p>
-      <Box
+      <DialogTitle id="alert-dialog-title" sx={{ fontWeight: 600 }}>
+        {"Your booking has been completed!"}
+      </DialogTitle>
+      <DialogContent
         sx={{
-          width: "60ch",
-          border: "1px solid black",
-          borderRadius: "5px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          p: 2,
         }}
       >
-        <Box sx={{ display: "flex", flexDirection: "column", fontWeight: 600 }}>
-          <p> Name: {firstName} </p> 
-          <p> Email address: </p> 
-          <p> Phone number: </p> 
-          <p> Departure city: </p> 
+        <DialogContentText
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            color: "grey",
+            fontWeight: 600,
+          }}
+        >
+          <p> Full name: </p>
+          <p> Email address: </p>
+          <p> Phone number: </p>
+          <p> Departure city: </p>
           <p> Arrival city: </p>
-        </Box>
-      </Box>
-    </Box>
+        </DialogContentText>
+        <DialogContentText
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            color: "grey",
+            ml: 3,
+          }}
+        >
+          <p>
+            {" "}
+            {props.firstName} {props.lastName}
+          </p>
+          <p> {props.email} </p>
+          <p> {props.phone} </p>
+          <p> {props.city} </p>
+          <p> {props.arrival} </p>
+        </DialogContentText>
+      </DialogContent>
+      <Button onClick={handleClose}>Home</Button>
+    </Dialog>
   );
 };
 

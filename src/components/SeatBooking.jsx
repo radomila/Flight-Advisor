@@ -1,4 +1,3 @@
-/* eslint-disable no-unreachable */
 import React, { useState, useContext } from "react";
 import { FlightsContext } from "./FlightsProvider";
 import Box from "@mui/material/Box";
@@ -7,7 +6,7 @@ import Divider from "@mui/material/Divider";
 
 const SeatBooking = ({ flightId }) => {
   const data = useContext(FlightsContext);
-  const [reservedSeat, setReservedSeat] = useState([]);
+  const [reservedSeat, setReservedSeat] = useState([]); 
 
   const handleReservation = (seat) => {
     if (reservedSeat.includes(seat)) {

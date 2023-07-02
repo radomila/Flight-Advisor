@@ -35,9 +35,6 @@ function FlightDetail({ flight }) {
       >
         Letenky
       </Button>  
-      {flight.seats.map((seat) => {
-        return <p>{seat.number}</p>
-      })}
     </Box>
   );
 }

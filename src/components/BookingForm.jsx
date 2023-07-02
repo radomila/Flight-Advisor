@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
@@ -7,9 +6,7 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Confirmation from "./Confirmation";
 
-const FlightReservation = () => {
-  let navigate = useNavigate();
-
+const BookingForm = () => {
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
@@ -23,7 +20,8 @@ const FlightReservation = () => {
   const [isDepartureValid, setIsDepartureValid] = useState(false);
   const [isArrivalValid, setIsArrivalValid] = useState(false);
   const [isPhoneValid, setIsPhoneValid] = useState(false);
-  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(false); 
+  const [open, setOpen] = useState(false); 
 
   const isValid = (event) => {
     if (!/^[a-zA-Z]+$/.test(firstName, lastName, city)) {
@@ -42,17 +40,23 @@ const FlightReservation = () => {
       setIsEmailValid(true);
     }
     setIsFormValid(true);
+
+    if (firstName) {
+      console.log(firstName);
+    }
   };
 
   const isFormSubmitted = (event) => {
     isValid();
     if (isFormValid) {
-      navigate(`/booking-confirmation`);
-      setIsFormSubmitted(true);
+      setIsFormSubmitted(true); 
+      setOpen(true)
     } else {
-      setIsFormSubmitted(false);
+      setIsFormSubmitted(false); 
+      setOpen(false)
     }
-  };
+  }; 
+  
 
   return (
     <Box>
@@ -72,7 +76,7 @@ const FlightReservation = () => {
         >
           <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
             <TextField
-              firstName={firstName} 
+              firstName={firstName}
               required
               id="outlined-required"
               label="First Name"
@@ -183,9 +187,20 @@ const FlightReservation = () => {
           Submit
         </Button>
       </Box>
-      {FormSubmitted && <Confirmation firstName={firstName} />}
+      {FormSubmitted && (
+        <Confirmation
+          firstName={firstName}
+          lastName={lastName}
+          email={email}
+          phone={phone} 
+          city={city} 
+          arrival={arrival} 
+          open={open}
+          setOpen={setOpen}
+        />
+      )}
     </Box>
   );
 };
 
-export default FlightReservation;
+export default BookingForm;
